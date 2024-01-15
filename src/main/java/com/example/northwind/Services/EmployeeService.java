@@ -44,14 +44,14 @@ public class EmployeeService {
         return transferModelToOutputDTO(employeeRepository.save(transferInputDTOToModel(employeeInputDTO)));
     }
 
-    public EmployeeOutputDTO getEmployeeById(short id) {
+    public EmployeeOutputDTO getEmployeeById(Short id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id " + id));;
 
         return transferModelToOutputDTO(employee);
     }
 
-    public EmployeeOutputDTO updateEmployeeById(short id, EmployeeOutputDTO employeeOutputDTO) {
+    public EmployeeOutputDTO updateEmployeeById(Short id, EmployeeOutputDTO employeeOutputDTO) {
         Employee existingEmployee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id " + id));
 

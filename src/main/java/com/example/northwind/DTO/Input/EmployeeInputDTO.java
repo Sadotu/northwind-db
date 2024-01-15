@@ -1,5 +1,6 @@
 package com.example.northwind.DTO.Input;
 
+import com.example.northwind.Models.Employee;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,8 @@ import java.util.Date;
 @Setter
 public class EmployeeInputDTO {
 
-    private short employeeId;
+    private Short employeeId;
+    private Employee reportsTo;
 
     @NotBlank(message = "Last name is mandatory")
     @Size(max = 20, message = "Last name must be less than or equal to 20 characters")

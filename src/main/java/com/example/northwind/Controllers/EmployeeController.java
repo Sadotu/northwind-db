@@ -24,12 +24,12 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeOutputDTO> getEmployeeById(@PathVariable short id) {
+    public ResponseEntity<EmployeeOutputDTO> getEmployeeById(@PathVariable Short id) {
         return ResponseEntity.ok(employeeService.getEmployeeById(id));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<EmployeeOutputDTO> updateEmployeeById(@PathVariable short id, @RequestBody EmployeeOutputDTO employeeOutputDTO) {
+    public ResponseEntity<EmployeeOutputDTO> updateEmployeeById(@PathVariable Short id, @RequestBody EmployeeOutputDTO employeeOutputDTO) {
         return ResponseEntity.ok(employeeService.updateEmployeeById(id, employeeOutputDTO));
     }
 }

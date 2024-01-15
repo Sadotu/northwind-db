@@ -14,8 +14,10 @@ import java.util.Date;
 public class Employee {
     @Id
     @Column(nullable = false, unique = true)
-    private short employeeId;
-    private short reportsTo;
+    private Short employeeId;
+    @ManyToOne
+    @JoinColumn(name = "reports_to")
+    private Employee reportsTo;
     private String lastName;
     private String firstName;
     private String title;
