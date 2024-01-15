@@ -8,7 +8,6 @@ import java.util.Date;
 @Setter
 @Getter
 public class EmployeeOutputDTO {
-    private short employeeId;
     private String lastName;
     private String firstName;
     private String title;
@@ -24,4 +23,5 @@ public class EmployeeOutputDTO {
     private String extension;
     private String notes;
     private String photoPath;
+    private boolean active;
 }

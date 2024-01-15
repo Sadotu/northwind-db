@@ -56,4 +56,5 @@ public class EmployeeInputDTO {
     @Size(max = 400, message = "Note must be less than or equal to 400 characters")
     private String notes;
     private String photoPath;
+    private boolean active;
 }

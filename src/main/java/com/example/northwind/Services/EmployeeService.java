@@ -50,4 +50,13 @@ public class EmployeeService {
 
         return transferModelToOutputDTO(employee);
     }
+
+    public EmployeeOutputDTO updateEmployeeById(short id, EmployeeOutputDTO employeeOutputDTO) {
+        Employee existingEmployee = employeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id " + id));
+
+        BeanUtils.copyProperties(employeeOutputDTO, existingEmployee, "id");
+
+        return transferModelToOutputDTO(employeeRepository.save(existingEmployee));
+    }
 }
