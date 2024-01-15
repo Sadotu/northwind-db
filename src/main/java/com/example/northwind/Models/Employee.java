@@ -15,9 +15,6 @@ public class Employee {
     @Id
     @Column(nullable = false, unique = true)
     private Short employeeId;
-    @ManyToOne
-    @JoinColumn(name = "reports_to")
-    private Employee reportsTo;
     private String lastName;
     private String firstName;
     private String title;
@@ -34,5 +31,9 @@ public class Employee {
     private String notes;
     private String photoPath;
     private boolean active;
+
+    @ManyToOne
+    @JoinColumn(name = "reports_to")
+    private Employee reportsTo;
 }
 

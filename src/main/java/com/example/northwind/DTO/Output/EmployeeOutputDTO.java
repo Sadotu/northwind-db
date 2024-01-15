@@ -9,7 +9,6 @@ import java.util.Date;
 @Setter
 @Getter
 public class EmployeeOutputDTO {
-    private Employee reportsTo;
     private String lastName;
     private String firstName;
     private String title;
@@ -26,4 +25,7 @@ public class EmployeeOutputDTO {
     private String notes;
     private String photoPath;
     private boolean active;
+
+    //relations
+    private Employee reportsTo;
 }

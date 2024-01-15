@@ -12,7 +12,6 @@ import java.util.Date;
 public class EmployeeInputDTO {
 
     private Short employeeId;
-    private Employee reportsTo;
 
     @NotBlank(message = "Last name is mandatory")
     @Size(max = 20, message = "Last name must be less than or equal to 20 characters")
@@ -59,4 +58,7 @@ public class EmployeeInputDTO {
     private String notes;
     private String photoPath;
     private boolean active;
+
+    //relations
+    private Employee reportsTo;
 }
