@@ -1,2 +1,10 @@
-package com.example.northwind.DTO.Output;public class RegionOutputDTO {
+package com.example.northwind.DTO.Output;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class RegionOutputDTO {
+    private String regionDescription;
 }

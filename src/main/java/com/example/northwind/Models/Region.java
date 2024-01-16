@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "regions")
+@Table(name = "region")
 public class Region {
     @Id
     @Column(nullable = false, unique = true)
