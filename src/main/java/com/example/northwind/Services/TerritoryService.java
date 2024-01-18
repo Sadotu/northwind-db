@@ -89,4 +89,22 @@ public class TerritoryService {
                 .map(this::transferModelToOutputDTO)
                 .collect(Collectors.toList());
     }
+
+    public TerritoryOutputDTO updateTerritory(String id, TerritoryInputDTO territoryInputDTO) {
+        Territory territory = territoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Territory not found with id " + id));
+
+        String newDescription = territoryInputDTO.getTerritoryDescription();
+        territory.setTerritoryDescription(newDescription);
+
+        Short newRegionId = territoryInputDTO.getRegionId();
+        if (newRegionId != null) {
+            Region newRegion = regionRepository.findById(newRegionId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Region not found with id " + newRegionId));
+            territory.setRegion(newRegion);
+        }
+
+        return transferModelToOutputDTO(territoryRepository.save(territory));
+    }
+
 }

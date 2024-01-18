@@ -38,4 +38,9 @@ public class TerritoryController {
     public ResponseEntity<List<TerritoryOutputDTO>> getTerritoriesByRegion(@PathVariable Short id) {
         return ResponseEntity.ok(territoryService.getTerritoriesByRegion(id));
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<TerritoryOutputDTO> updateTerritory(@PathVariable String id, @RequestBody TerritoryInputDTO territoryInputDTO) {
+        return ResponseEntity.ok(territoryService.updateTerritory(id, territoryInputDTO));
+    }
 }

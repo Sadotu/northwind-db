@@ -32,12 +32,6 @@ public class RegionService {
         return regionOutputDTO;
     }
 
-    public Region transferInputDTOToModel(RegionInputDTO regionInputDTO) {
-        Region region = new Region();
-        BeanUtils.copyProperties(regionInputDTO, region);
-        return region;
-    }
-
     public RegionOutputDTO addRegion(RegionInputDTO regionInputDTO) {
         Region latestRegion = regionRepository.findTopByOrderByRegionIdDesc()
                 .orElse(null);

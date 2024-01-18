@@ -9,5 +9,5 @@ import lombok.Setter;
 public class TerritoryOutputDTO {
     private String territoryId;
     private String territoryDescription;
-//    private Short regionId;
+    private Short regionId;
 }
