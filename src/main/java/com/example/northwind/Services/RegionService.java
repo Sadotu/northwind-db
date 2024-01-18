@@ -59,4 +59,14 @@ public class RegionService {
 
         return transferModelToOutputDTO(region);
     }
+
+    public RegionOutputDTO updateRegionById(Short id, RegionInputDTO regionInputDTO) {
+        Region region = regionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Region not found with id " + id));
+
+        String newDescription = regionInputDTO.getRegionDescription();
+        region.setRegionDescription(newDescription);
+
+        return transferModelToOutputDTO(regionRepository.save(region));
+    }
 }

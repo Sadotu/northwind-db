@@ -31,4 +31,9 @@ public class RegionController {
     public ResponseEntity<RegionOutputDTO> getRegionById(@PathVariable Short region_id) {
         return ResponseEntity.ok(regionService.getRegionById(region_id));
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<RegionOutputDTO> updateRegion(@PathVariable Short id, @RequestBody RegionInputDTO regionInputDTO) {
+        return ResponseEntity.ok(regionService.updateRegionById(id, regionInputDTO));
+    }
 }
