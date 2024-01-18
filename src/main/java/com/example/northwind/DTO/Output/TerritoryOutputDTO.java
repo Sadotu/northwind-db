@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TerritoryOutputDTO {
+    private String territoryId;
     private String territoryDescription;
-    private Region regionId;
+//    private Short regionId;
 }

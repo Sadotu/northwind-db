@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface RegionRepository extends JpaRepository<Region, Short> {
     Optional<Region> findById(Short id);
     Optional<Region> findByRegionDescription(String regionDescription);
+    Optional<Region> findTopByOrderByRegionIdDesc();
 }

@@ -31,11 +31,20 @@ public class RegionService {
     }
 
     public RegionOutputDTO addRegion(RegionInputDTO regionInputDTO) {
-        Region region = regionRepository.findById(regionInputDTO.getRegionId())
-                .orElseThrow(() -> new ResourceNotFoundException("Region not found with id " + regionInputDTO.getRegionId()));
+        Region latestRegion = regionRepository.findTopByOrderByRegionIdDesc()
+                .orElse(null);
 
-        return transferModelToOutputDTO(regionRepository.save(transferInputDTOToModel(regionInputDTO)));
+        Short newRegionId = (short) (latestRegion != null ? (latestRegion.getRegionId() + 1) : 1);
+
+        Region region = new Region();
+        region.setRegionId(newRegionId);
+        region.setRegionDescription(regionInputDTO.getRegionDescription());
+
+        region = regionRepository.save(region);
+
+        return transferModelToOutputDTO(region);
     }
+
 
     public RegionOutputDTO getRegionByDescription(String name) {
         Region region = regionRepository.findByRegionDescription(name)

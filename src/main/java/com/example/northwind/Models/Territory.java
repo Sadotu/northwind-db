@@ -13,11 +13,14 @@ import lombok.Setter;
 @Entity
 @Table(name = "territories")
 public class Territory {
+
     @Id
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 5)
     private String territoryId;
+
     private String territoryDescription;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
-    private Region regionId;
+    private Region region;
 }

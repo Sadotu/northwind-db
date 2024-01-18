@@ -1,9 +1,6 @@
 package com.example.northwind.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +14,9 @@ import lombok.Setter;
 @Table(name = "region")
 public class Region {
     @Id
-    @Column(nullable = false, unique = true)
+    @Column(name = "region_id", nullable = false)
     private Short regionId;
+
+    @Column(name = "region_description")
     private String regionDescription;
 }
