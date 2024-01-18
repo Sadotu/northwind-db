@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/territories")
 public class TerritoryController {
@@ -30,5 +32,10 @@ public class TerritoryController {
     @GetMapping("/by-id/{id}")
     public ResponseEntity<TerritoryOutputDTO> getTerritoryById(@PathVariable String id) {
         return ResponseEntity.ok(territoryService.getTerritoryById(id));
+    }
+
+    @GetMapping("/by-region/{id}")
+    public ResponseEntity<List<TerritoryOutputDTO>> getTerritoriesByRegion(@PathVariable Short id) {
+        return ResponseEntity.ok(territoryService.getTerritoriesByRegion(id));
     }
 }

@@ -2,19 +2,27 @@ package com.example.northwind.Services;
 
 import com.example.northwind.DTO.Input.RegionInputDTO;
 import com.example.northwind.DTO.Output.RegionOutputDTO;
+import com.example.northwind.DTO.Output.TerritoryOutputDTO;
+import com.example.northwind.Exceptions.CannotDeleteException;
 import com.example.northwind.Exceptions.ResourceNotFoundException;
 import com.example.northwind.Models.Region;
 import com.example.northwind.Repositories.RegionRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RegionService {
 
     private final RegionRepository regionRepository;
+    private final TerritoryService territoryService;
 
-    public RegionService(RegionRepository regionRepository) {
+    public RegionService(RegionRepository regionRepository, TerritoryService territoryService) {
         this.regionRepository = regionRepository;
+        this.territoryService = territoryService;
     }
 
     public RegionOutputDTO transferModelToOutputDTO(Region region) {
@@ -68,5 +76,20 @@ public class RegionService {
         region.setRegionDescription(newDescription);
 
         return transferModelToOutputDTO(regionRepository.save(region));
+    }
+
+    @Transactional
+    public void deleteRegion(Short regionId) throws CannotDeleteException {
+        List<TerritoryOutputDTO> territories = territoryService.getTerritoriesByRegion(regionId);
+
+        if (!territories.isEmpty()) {
+            String territoryDetails = territories.stream()
+                    .map(t -> t.getTerritoryId() + " - " + t.getTerritoryDescription())
+                    .collect(Collectors.joining(", "));
+
+            throw new CannotDeleteException("Cannot delete region as it still contains territories: " + territoryDetails);
+        }
+
+        regionRepository.deleteById(regionId);
     }
 }

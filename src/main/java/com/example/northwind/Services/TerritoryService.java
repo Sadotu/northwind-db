@@ -10,8 +10,10 @@ import com.example.northwind.Repositories.TerritoryRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 @Service
 public class TerritoryService {
@@ -79,5 +81,12 @@ public class TerritoryService {
                 .orElseThrow(() -> new ResourceNotFoundException("Territory not found with id " + id));
 
         return transferModelToOutputDTO(territory);
+    }
+
+    public List<TerritoryOutputDTO> getTerritoriesByRegion(Short regionId) {
+        List<Territory> territories = territoryRepository.findByRegion_RegionId(regionId);
+        return territories.stream()
+                .map(this::transferModelToOutputDTO)
+                .collect(Collectors.toList());
     }
 }
