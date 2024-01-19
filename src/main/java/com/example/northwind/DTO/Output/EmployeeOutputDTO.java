@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -27,5 +28,6 @@ public class EmployeeOutputDTO {
     private boolean active;
 
     //relations
-    private Employee reportsTo;
+    private SimpleEmployeeOutputDTO reportsTo;
+    private List<TerritoryOutputDTO> territories;
 }

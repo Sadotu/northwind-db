@@ -107,4 +107,10 @@ public class TerritoryService {
         return transferModelToOutputDTO(territoryRepository.save(territory));
     }
 
+    public void deleteTerritory(String id) {
+        Territory territory = territoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Territory not found with id " + id));
+
+        territoryRepository.delete(territory);
+    }
 }

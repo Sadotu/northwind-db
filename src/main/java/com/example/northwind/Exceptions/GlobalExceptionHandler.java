@@ -28,6 +28,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleEmployeeAlreadyExistsException(EmployeeAlreadyExistsException ex) {
         String error = ex.getMessage();
         return ResponseEntity
+                .status(HttpStatus.CONFLICT) // 409 Conflict
+                .body(error);
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<Object> handleIllegalStateException(IllegalStateException ex) {
+        String error = ex.getMessage();
+        return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST) // 400 Bad Request
                 .body(error);
     }

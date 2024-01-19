@@ -32,4 +32,9 @@ public class EmployeeController {
     public ResponseEntity<EmployeeOutputDTO> updateEmployeeById(@PathVariable Short id, @RequestBody EmployeeOutputDTO employeeOutputDTO) {
         return ResponseEntity.ok(employeeService.updateEmployeeById(id, employeeOutputDTO));
     }
+
+    @PutMapping("/assign/{territoryId}/to/{employeeId}")
+    public ResponseEntity<EmployeeOutputDTO> assignTerritoryToEmployee(@PathVariable String territoryId, @PathVariable Short employeeId) {
+        return ResponseEntity.ok(employeeService.assignTerritoryToEmployee(territoryId, employeeId));
+    }
 }

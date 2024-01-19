@@ -4,6 +4,7 @@ import lombok.*;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,5 +36,13 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "reports_to")
     private Employee reportsTo;
+
+    @ManyToMany
+    @JoinTable(
+            name = "employee_territories",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "territory_id")
+    )
+    private Set<Territory> territories;
 }
 

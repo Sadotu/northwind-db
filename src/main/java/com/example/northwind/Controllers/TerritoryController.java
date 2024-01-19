@@ -43,4 +43,10 @@ public class TerritoryController {
     public ResponseEntity<TerritoryOutputDTO> updateTerritory(@PathVariable String id, @RequestBody TerritoryInputDTO territoryInputDTO) {
         return ResponseEntity.ok(territoryService.updateTerritory(id, territoryInputDTO));
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteTerritory(@PathVariable String id) {
+        territoryService.deleteTerritory(id);
+        return ResponseEntity.noContent().build();
+    }
 }
