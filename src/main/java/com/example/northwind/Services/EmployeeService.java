@@ -86,22 +86,4 @@ public class EmployeeService {
 
         return transferModelToOutputDTO(employeeRepository.save(existingEmployee));
     }
-
-    @Transactional
-    public EmployeeOutputDTO assignTerritoryToEmployee(String territoryId, Short employeeId) {
-        Employee employee = employeeRepository.findById(employeeId)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id " + employeeId));
-
-        Territory territory = territoryRepository.findById(territoryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Territory not found with id " + territoryId));
-
-        if (employee.getTerritories().contains(territory)) {
-            throw new IllegalStateException("The territory is already assigned to this employee.");
-        }
-
-        employee.getTerritories().add(territory);
-        employee = employeeRepository.save(employee);
-
-        return transferModelToOutputDTO(employee);
-    }
 }

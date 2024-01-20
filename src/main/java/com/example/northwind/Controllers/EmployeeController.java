@@ -4,6 +4,7 @@ import com.example.northwind.DTO.Input.EmployeeInputDTO;
 import com.example.northwind.DTO.Output.EmployeeOutputDTO;
 import com.example.northwind.Exceptions.EmployeeAlreadyExistsException;
 import com.example.northwind.Services.EmployeeService;
+import com.example.northwind.Services.RelationshipService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/employees")
 public class EmployeeController {
     private final EmployeeService employeeService;
+    private final RelationshipService relationshipService;
 
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService, RelationshipService relationshipService) {
         this.employeeService = employeeService;
+        this.relationshipService = relationshipService;
     }
 
     @PostMapping("/create")
@@ -35,6 +38,6 @@ public class EmployeeController {
 
     @PutMapping("/assign/{territoryId}/to/{employeeId}")
     public ResponseEntity<EmployeeOutputDTO> assignTerritoryToEmployee(@PathVariable String territoryId, @PathVariable Short employeeId) {
-        return ResponseEntity.ok(employeeService.assignTerritoryToEmployee(territoryId, employeeId));
+        return ResponseEntity.ok(relationshipService.assignTerritoryToEmployee(territoryId, employeeId));
     }
 }

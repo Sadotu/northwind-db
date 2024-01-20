@@ -3,8 +3,10 @@ package com.example.northwind.Services;
 import com.example.northwind.DTO.Input.TerritoryInputDTO;
 import com.example.northwind.DTO.Output.TerritoryOutputDTO;
 import com.example.northwind.Exceptions.ResourceNotFoundException;
+import com.example.northwind.Models.Employee;
 import com.example.northwind.Models.Region;
 import com.example.northwind.Models.Territory;
+import com.example.northwind.Repositories.EmployeeRepository;
 import com.example.northwind.Repositories.RegionRepository;
 import com.example.northwind.Repositories.TerritoryRepository;
 import org.springframework.beans.BeanUtils;
@@ -17,13 +19,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class TerritoryService {
-
+    private final EmployeeRepository employeeRepository;
     private final TerritoryRepository territoryRepository;
     private final RegionRepository regionRepository;
+    private final RelationshipService relationshipService;
 
-    public TerritoryService(TerritoryRepository territoryRepository, RegionRepository regionRepository) {
+    public TerritoryService(EmployeeRepository employeeRepository, TerritoryRepository territoryRepository, RegionRepository regionRepository, RelationshipService relationshipService) {
+        this.employeeRepository = employeeRepository;
         this.territoryRepository = territoryRepository;
         this.regionRepository = regionRepository;
+        this.relationshipService = relationshipService;
     }
 
     public TerritoryOutputDTO transferModelToOutputDTO(Territory territory) {
@@ -31,12 +36,6 @@ public class TerritoryService {
         BeanUtils.copyProperties(territory, territoryOutputDTO);
 
         return territoryOutputDTO;
-    }
-
-    public Territory transferInputDTOToModel(TerritoryInputDTO territoryInputDTO) {
-        Territory territory = new Territory();
-        BeanUtils.copyProperties(territoryInputDTO, territory);
-        return territory;
     }
 
     public TerritoryOutputDTO addTerritory(TerritoryInputDTO territoryInputDTO) {
@@ -107,9 +106,14 @@ public class TerritoryService {
         return transferModelToOutputDTO(territoryRepository.save(territory));
     }
 
-    public void deleteTerritory(String id) {
-        Territory territory = territoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Territory not found with id " + id));
+    public void deleteTerritory(String territoryId) {
+        Territory territory = territoryRepository.findById(territoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Territory not found with id " + territoryId));
+
+        List<Employee> assignedEmployees = employeeRepository.findAllByTerritoriesContains(territory);
+        for (Employee employee : assignedEmployees) {
+            relationshipService.unassignTerritoryFromEmployee(territoryId, employee.getEmployeeId());
+        }
 
         territoryRepository.delete(territory);
     }
